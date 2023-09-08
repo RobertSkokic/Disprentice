@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disprentice - Suche</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="text-center p-3">
+        <img src="./assets/logo.PNG" alt="Disprentice Logo" id="logo" class="mb-2">
+        <p>Finden Sie die besten Angebote!</p>
+    </header>
+
+    <section class="p-3">
+        <!-- Suchleiste -->
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nach Angeboten suchen..." aria-label="Suche" aria-describedby="search-button">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="search-button">Suchen</button>
+            </div>
+        </div>
+
+        <!-- Kachelbereich -->
+        <div class="d-flex flex-wrap justify-content-around">
+            <!-- Beispiel für eine Kategorie-Kachel -->
+            <div class="category-card mb-3">
+                <img src="./assets/schule.jpg" alt="Schule Bild" class="w-100">
+                <h2 class="mt-2 text-center">Schule</h2>
+            </div>
+            <div class="category-card mb-3">
+                <img src="./assets/reisen.jpg" alt="Reisen Bild" class="w-100">
+                <h2 class="mt-2 text-center">Reisen</h2>
+            </div>
+            <!-- Weitere Kacheln hier hinzufügen -->
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
