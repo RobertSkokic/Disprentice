@@ -4,11 +4,10 @@ exports.handler = async function(event, context) {
     }
 
     const payload = JSON.parse(event.body);
-    // Verarbeiten Sie hier die Daten aus dem POST-Request
     console.log(payload);
 
     return {
         statusCode: 200,
-        body: JSON.stringify({ message: "Daten erfolgreich verarbeitet" }),
+        body: JSON.stringify({ message: `Empfangene Daten: ${JSON.stringify(payload)}` }),
     };
 };
