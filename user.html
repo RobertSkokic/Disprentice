@@ -1,36 +1,75 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disprentice - Benutzer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js" type="text/javascript"></script>
-  </head>
-  <body>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="text-center p-3">
+        <img src="./assets/logo.PNG" alt="Disprentice Logo" id="logo" class="mb-2">
+        <p>Benutzerprofil</p>
+    </header>
+
     <span id="messageDisplay"></span>
     <br />
     <button type="button" id="messageButton">Click to send a message to the app</button>
-  </body>
-  <script type="text/javascript">
-    // when the button is clicked, send a message to the app
-    document.getElementById('messageButton').onclick = function() {
-      ThunkableWebviewerExtension.postMessage('hello world');
-    }
 
-    // when we get a message from the app, display it on the page
-    ThunkableWebviewerExtension.receiveMessage(function(message) {
-      document.getElementById('messageDisplay').innerHTML = message;
-    });
+    <section class="p-3">
+        <!-- Benutzerinformationen -->
+        <div class="user-info mb-4">
+            <h2>Benutzername: Max Mustermann</h2>
+            <p>Email: max.mustermann@example.com</p>
+            <p>Mitglied seit: 01.01.2023</p>
+        </div>
 
-    // when we get a message from the app that needs a return value
-    // return the string 'fast response' unless the message is
-    // 'slow message'. If the message is 'slow message', wait for
-    // four seconds, then return the string 'slow response'.
-    // The slow response shows how this could work for API calls that
-    // take time to execute.
-    ThunkableWebviewerExtension.receiveMessageWithReturnValue(function(message, callback) {
-      if (message === 'slow message') {
-        setTimeout(() => callback('slow response'), 4000);
-      } else {
-        callback('fast response');
-      }
-    });
-  </script>
+        <!-- Ausloggen-Button -->
+        <button class="btn btn-danger w-100">Ausloggen</button>
+    </section>
+
+    <!-- Navbar am unteren Rand -->
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand" href="index.html">Home</a>
+            <a class="navbar-brand" href="search.html">Search</a>
+            <a class="navbar-brand active" href="user.html">User</a>
+        </div>
+    </nav>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>
+
+
+<script type="text/javascript">
+  // when the button is clicked, send a message to the app
+  document.getElementById('messageButton').onclick = function() {
+    ThunkableWebviewerExtension.postMessage('hello world');
+  }
+
+  // when we get a message from the app, display it on the page
+  ThunkableWebviewerExtension.receiveMessage(function(message) {
+    document.getElementById('messageDisplay').innerHTML = message;
+  });
+
+  // when we get a message from the app that needs a return value
+  // return the string 'fast response' unless the message is
+  // 'slow message'. If the message is 'slow message', wait for
+  // four seconds, then return the string 'slow response'.
+  // The slow response shows how this could work for API calls that
+  // take time to execute.
+  ThunkableWebviewerExtension.receiveMessageWithReturnValue(function(message, callback) {
+    if (message === 'slow message') {
+      setTimeout(() => callback('slow response'), 4000);
+    } else {
+      callback('fast response');
+    }
+  });
+</script>

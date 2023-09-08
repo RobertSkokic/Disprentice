@@ -98,3 +98,46 @@ header {
     color: #A63629;
 }
 
+/* ... (vorheriger Code) ... */
+
+#search-button {
+    background-color: #A63629;
+    color: #E5E5DB;
+    border: none;
+}
+
+#search-button:hover {
+    background-color: #8A2B20;
+    color: #E5E5DB;
+}
+
+
+/* Stil für die Navbar am unteren Rand */
+.navbar {
+    background-color: #333436; /* Dunkelgrau/Schwarz */
+}
+
+.navbar .navbar-brand {
+    color: #a3a397; /* Hellgrau */
+}
+
+.navbar .navbar-brand:hover {
+    color: #A63629; /* Rotbraun */
+}
+
+/* Stil für den aktiven Link in der Navbar */
+.navbar .navbar-brand.active {
+    color: #A63629; /* Rotbraun */
+    font-weight: bold;
+}
+
+/* ... (vorheriger Code) ... */
+
+/* Stil für die Benutzerinformationen */
+.user-info h2 {
+    color: #A63629; /* Rotbraun */
+}
+
+.user-info p {
+    color: #333436; /* Dunkelgrau/Schwarz */
+}
