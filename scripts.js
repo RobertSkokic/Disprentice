@@ -1,5 +1,5 @@
 document.getElementById('myButton').addEventListener('click', async () => {
-    const dataToSend = { key: 'value' }; // Daten, die Sie senden möchten
+    const dataToSend = "test"
 
     const response = await fetch('/.netlify/functions/handlePost', {
         method: 'POST',
