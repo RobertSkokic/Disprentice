@@ -12,6 +12,8 @@
 </head>
 <body class="p-3">
 
+<button type="button" class="btn btn-secondary mb-3" id="syncButton">Sync</button>
+
 <div class="alert alert-primary" id="messageDisplay"></div>
 
 <div class="mb-3" id="companyList"></div>
@@ -19,70 +21,81 @@
 <button type="button" class="btn btn-primary" id="submitPoll">Submit</button>
 
 <script>
-  // Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyBT0YFbLY_PXRqcikA9u7qv4UHc_tY1bTE",
-    authDomain: "testthunkable2.firebaseapp.com",
-    databaseURL: "https://testthunkable2-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "testthunkable2",
-    storageBucket: "testthunkable2.appspot.com",
-    messagingSenderId: "104815273506",
-    appId: "1:104815273506:web:a5e212c09f75641c9d8c7b",
-    measurementId: "G-0BR6LFD0XJ"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  var userUID;
-  var companyListElement = document.getElementById('companyList');
-  var messageDisplayElement = document.getElementById('messageDisplay');
-
-  ThunkableWebviewerExtension.receiveMessage(function(message) {
-    userUID = message;
-    checkIfUserHasVoted(userUID);
-    fetchCompanyDetails();
-  });
-
-  function checkIfUserHasVoted(uid) {
-    firebase.database().ref('week1/votes/' + uid).once('value').then(function(snapshot) {
-      var userVote = snapshot.val();
-      if (userVote) {
-        messageDisplayElement.textContent = 'You have already voted for company with ID: ' + userVote;
-        document.getElementById('submitPoll').disabled = true;
+    // Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBT0YFbLY_PXRqcikA9u7qv4UHc_tY1bTE",
+      authDomain: "testthunkable2.firebaseapp.com",
+      databaseURL: "https://testthunkable2-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "testthunkable2",
+      storageBucket: "testthunkable2.appspot.com",
+      messagingSenderId: "104815273506",
+      appId: "1:104815273506:web:a5e212c09f75641c9d8c7b",
+      measurementId: "G-0BR6LFD0XJ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  
+    var userUID;
+    var companyListElement = document.getElementById('companyList');
+    var messageDisplayElement = document.getElementById('messageDisplay');
+  
+    document.getElementById('syncButton').onclick = function() {
+      ThunkableWebviewerExtension.postMessage('sync');
+    };
+  
+    ThunkableWebviewerExtension.receiveMessage(function(message) {
+      if (message.uid) {
+        userUID = message.uid;
+        checkIfUserHasVoted(userUID);
+        fetchCompanyDetails();
       }
     });
-  }
-
-  function fetchCompanyDetails() {
-    firebase.database().ref('week1/companies').once('value').then(function(snapshot) {
-      var companies = snapshot.val();
-      for (var companyId in companies) {
-        var company = companies[companyId];
-        var companyElement = document.createElement('div');
-        companyElement.className = 'form-check';
-        companyElement.innerHTML = `
-          <input class="form-check-input" type="radio" name="companyVote" id="company${companyId}" value="${companyId}">
-          <label class="form-check-label" for="company${companyId}">
-            ${company.name} - ${company.description} (<a href="${company.link}" target="_blank">Link</a>) - ${company.bonus}
-          </label>
-        `;
-        companyListElement.appendChild(companyElement);
-      }
-    });
-  }
-
-  document.getElementById('submitPoll').onclick = function() {
-    var selectedCompany = document.querySelector('input[name="companyVote"]:checked');
-    if (selectedCompany) {
-      firebase.database().ref('week1/votes/' + userUID).set(parseInt(selectedCompany.value)).then(function() {
-        alert('Your vote has been recorded!');
-        document.getElementById('submitPoll').disabled = true;
+  
+    function checkIfUserHasVoted(uid) {
+      firebase.database().ref('week1/votes/' + uid).once('value').then(function(snapshot) {
+        var userVote = snapshot.val();
+        if (userVote) {
+          messageDisplayElement.textContent = 'You have already voted for company with ID: ' + userVote;
+          document.getElementById('submitPoll').disabled = true;
+        }
       });
-    } else {
-      alert('Please select a company before submitting.');
     }
-  };
-</script>
+  
+    function fetchCompanyDetails() {
+      firebase.database().ref('week1/companies').once('value').then(function(snapshot) {
+        var companies = snapshot.val();
+        for (var companyId in companies) {
+          var company = companies[companyId];
+          var companyElement = document.createElement('div');
+          companyElement.className = 'form-check';
+          companyElement.innerHTML = `
+            <input class="form-check-input" type="radio" name="companyVote" id="company${companyId}" value="${companyId}">
+            <label class="form-check-label" for="company${companyId}">
+              ${company.name} - ${company.description} (<a href="${company.link}" target="_blank">Link</a>) - ${company.bonus}
+            </label>
+          `;
+          companyListElement.appendChild(companyElement);
+        }
+      });
+    }
+  
+    document.getElementById('submitPoll').onclick = function() {
+      var selectedCompany = document.querySelector('input[name="companyVote"]:checked');
+      if (selectedCompany) {
+        firebase.database().ref('week1/votes/' + userUID).set(parseInt(selectedCompany.value)).then(function() {
+          alert('Your vote has been recorded!');
+          document.getElementById('submitPoll').disabled = true;
+        });
+      } else {
+        alert('Please select a company before submitting.');
+      }
+    };
+  
+    window.onerror = function (message, source, lineno, colno, error) {
+      ThunkableWebviewerExtension.postMessage({error: {message, source, lineno, colno, error}});
+    };
+  </script>
+  
 
 </body>
 </html>
