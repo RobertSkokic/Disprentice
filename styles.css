@@ -2,16 +2,18 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #E5E5DB;
 }
 
 header {
-    background-color: #333;
+    background-color: #333436; /* Dunkelgrau/Schwarz für den Header */
+    color: #E5E5DB;
+    padding: 10px 0;
+    text-align: center;
 }
 
 #logo {
-    width: 50px;
-    height: 50px;
+    width: auto; /* Setzt die Breite auf automatisch, sodass das Bild seine Proportionen beibehält */
     display: block;
     margin: 0 auto;
 }
@@ -20,18 +22,24 @@ header {
     flex: 0 0 auto;
     width: 80%;
     max-width: 300px;
-    background-color: #fff;
+    height: 250px;
+    background-color: #E5E5DB;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s;
+    overflow: hidden;
 }
 
-.news-card:hover {
-    transform: scale(1.05);
+.news-card h2 {
+    color: #A63629; /* Rotbraune Farbe für Überschriften */
 }
 
 .news-card img {
+    max-height: 150px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -42,19 +50,51 @@ header {
 }
 
 .modal-header {
-    background-color: #f4f4f4;
+    background-color: #333436;
+    color: #E5E5DB;
     border-bottom: none;
 }
 
 .modal-body {
     padding: 20px;
+    background-color: #E5E5DB;
 }
 
 .close {
-    color: #333;
+    color: #A63629;
     opacity: 1;
 }
 
 .close:hover {
-    color: red;
+    color: #E5E5DB;
 }
+
+/* ... (vorheriger Code von der Homepage) ... */
+
+.category-card {
+    flex: 0 0 calc(50% - 10px); /* Nimmt die Hälfte des verfügbaren Platzes minus 10px Abstand */
+    max-width: 150px;
+    background-color: #E5E5DB;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    overflow: hidden;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+}
+
+.category-card img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    max-height: 100px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.category-card h2 {
+    color: #A63629;
+}
+
