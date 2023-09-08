@@ -23,6 +23,9 @@
 
 <div class="mb-3" id="companyList"></div>
 
+<button type="button" class="btn btn-info mb-3" id="getDBInfoButton">Get DB Info</button>
+<div class="mb-3" id="dbInfoDisplay"></div>
+
 <button type="button" class="btn btn-primary" id="submitPoll">Submit</button>
 
 <script>
@@ -48,12 +51,14 @@
   var firebaseResponseDisplayElement = document.getElementById('firebaseResponseDisplay');
   var javascriptErrorDisplayElement = document.getElementById('javascriptErrorDisplay');
 
-  document.getElementById('syncButton').onclick = function() {
+  document.addEventListener('DOMContentLoaded', (event) => {
     ThunkableWebviewerExtension.postMessage('sync');
-  };
+  });
 
   ThunkableWebviewerExtension.receiveMessage(function(message) {
-    if (message.uid) {
+    if (message === 'sync') {
+      ThunkableWebviewerExtension.postMessage('sync');
+    } else if (message.uid) {
       userUID = message.uid;
       document.getElementById('userGUIDDisplay').textContent = 'User GUID: ' + userUID;
       checkIfUserHasVoted(userUID);
@@ -107,6 +112,18 @@
     } else {
       alert('Please select a company before submitting.');
     }
+  };
+
+  document.getElementById('getDBInfoButton').onclick = function() {
+    fetch('https://testthunkable2-default-rtdb.europe-west1.firebasedatabase.app/polls.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('dbInfoDisplay').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById('dbInfoDisplay').textContent = 'Error fetching DB info: ' + JSON.stringify(error, null, 2);
+        ThunkableWebviewerExtension.postMessage({error: 'Error fetching DB info: ' + JSON.stringify(error, null, 2)});
+      });
   };
 
   window.onerror = function (message, source, lineno, colno, error) {
