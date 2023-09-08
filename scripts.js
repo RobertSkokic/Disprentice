@@ -1,14 +1,7 @@
-document.getElementById('myButton').addEventListener('click', async () => {
-    const dataToSend = "test"
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = "block";
+}
 
-    const response = await fetch('/.netlify/functions/handlePost', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-    });
-
-    const responseData = await response.json();
-    document.getElementById('postData').innerText = responseData.message;
-});
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+}
